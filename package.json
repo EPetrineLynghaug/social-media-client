@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "npx eslint . --fix",
     "prepare": "husky",
-    "test": "jest",
+    "test": "node --no-warnings ./node_modules/.bin/jest",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:test:run": "start-server-and-test start http://localhost:8080 cy:run",
