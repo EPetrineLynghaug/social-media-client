@@ -1,11 +1,3 @@
-// import globals from "globals";
-// import pluginJs from "@eslint/js";
-
-// export default [
-//   { languageOptions: { globals: globals.browser } },
-//   pluginJs.configs.recommended,
-// ];
-
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import pluginJest from "eslint-plugin-jest";
@@ -16,19 +8,21 @@ export default [
     files: ["**/*.js"],
     languageOptions: {
       globals: {
-        ...globals.browser, // Add browser globals like `document`, `fetch`, etc.
+        ...globals.browser, // JavaScript files
+        global: "readonly", // Add global as a readonly global variable
       },
     },
   },
   pluginJs.configs.recommended,
   {
-    files: ["**/*.test.js"], // Applies only to Jest test files
+    files: ["**/*.test.js"], // Jest test files
     plugins: {
       jest: pluginJest,
     },
     languageOptions: {
       globals: {
-        ...globals.jest, // Add Jest globals like `describe`, `it`, etc.
+        ...globals.jest, // Jest-specific globals
+        global: "readonly", // global is defined for Jest as well
       },
     },
     rules: {
@@ -36,20 +30,21 @@ export default [
     },
   },
   {
-    files: ["cypress.config.js", "cypress/**/*.cy.js"], // Applies to Cypress test files
+    files: ["cypress.config.js", "cypress/**/*.cy.js"], // For Cypress test 
     plugins: {
       cypress: pluginCypress,
     },
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node,
-        ...globals.cypress, // Add Cypress globals like `cy`, `Cypress`, etc.
+        ...globals.node, //Node globals 
+        ...globals.cypress, // Cypress-specific globals
+        global: "readonly", //  global for Cypress environment
       },
     },
     rules: {
       ...pluginCypress.configs.recommended.rules,
-      "no-undef": "off", // Disable `no-undef` for CommonJS globals like `require` and `module`
+      "no-undef": "off", // Disable `no-undef` for CommonJS globals
       "no-unused-vars": "off", // Disable `no-unused-vars` for config functions
     },
   },
