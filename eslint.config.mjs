@@ -30,14 +30,14 @@ export default [
     },
   },
   {
-    files: ["cypress.config.js", "cypress/**/*.cy.js"], // For Cypress test 
+    files: ["cypress.config.js", "cypress/**/*.cy.js"], // For Cypress test
     plugins: {
       cypress: pluginCypress,
     },
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node, //Node globals 
+        ...globals.node, //Node globals
         ...globals.cypress, // Cypress-specific globals
         global: "readonly", //  global for Cypress environment
       },
