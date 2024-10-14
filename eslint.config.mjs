@@ -46,6 +46,7 @@ export default [
       ...pluginCypress.configs.recommended.rules,
       "no-undef": "off", // Disable `no-undef` for CommonJS globals
       "no-unused-vars": "off", // Disable `no-unused-vars` for config functions
+      "cypress/no-unnecessary-waiting": "off",
     },
   },
 ];
