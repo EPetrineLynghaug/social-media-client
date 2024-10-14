@@ -11,37 +11,38 @@ describe("login", () => {
     accessToken: mockAccessToken,
   };
 
+  // Mock a successful API response
+  globalThis.fetch = jest.fn().mockResolvedValue({
+    ok: true,
+    json: () => Promise.resolve(mockProfile),
+  });
+
+  // Mock localStorage
+  const mockStorage = {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    removeItem: jest.fn(),
+  };
+  globalThis.localStorage = mockStorage;
+
   beforeEach(() => {
     localStorage.clear();
     jest.clearAllMocks();
   });
 
   it("Successfully save the token", async () => {
-    // Mock a successful API response
-    globalThis.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve(mockProfile),
-    });
-
     await login(email, password);
 
     const token = localStorage.getItem("token");
     const accessToken = JSON.parse(token);
-
     expect(accessToken).toEqual(mockAccessToken);
   });
 
   it("Deletes the token successfully", async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve(mockProfile),
-    });
-
     await login(email, password);
     logout();
 
     const token = localStorage.getItem("token");
-
     expect(token).toBeNull();
   });
 });
